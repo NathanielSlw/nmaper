@@ -13,19 +13,37 @@ BLUE = "\033[94m"
 RED = "\033[91m"
 
 # Help message
-usage = f"""
-{YELLOW}Usage:
+usage = f"""{YELLOW}Usage:
     nmaper IP/FILE [OPTIONS]
 
 OPTIONS:
     ALL     : Scan all ports (-p-)
-    (all other valid Nmap options are also accepted directly){RESET}
+    (all other valid Nmap options are also accepted directly)
+    -h, --help : Show this help message{RESET}
+
+Example:
+    - Scan a single target with the default quick and in-depth scan
+        nmaper.py 192.168.1.1
+
+    - Scan all ports of a target (-p-)
+        nmaper.py 192.168.1.1 ALL
+
+    - Use custom Nmap options (e.g. fast UDP scan)
+        nmaper.py 192.168.1.1 -sU -T4
+
+    - Scan multiple targets listed in a file
+        nmaper.py targets.txt
 """
 
 # Argument check
 if len(sys.argv) == 1:
     print(usage)
     sys.exit(1)
+
+# Help option
+if sys.argv[1] in ("-h", "--help"):
+    print(usage)
+    sys.exit(0)
 
 # Main parameter (target or file)
 TARGET = sys.argv[1]
